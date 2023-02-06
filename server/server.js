@@ -11,6 +11,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// Route Handlers
+const userRoutes = require('./routes/userRoutes');
+
+// Routes
+app.use('/api/user', userRoutes);
+
 // Configure Port
 const PORT = process.env.PORT || 3001;
 
