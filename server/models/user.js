@@ -7,25 +7,25 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     isAdmin: {
         type: Boolean,
         default: false,
-    }
+    },
 }, { timestamps: true });
 
 // User Sign-Up Method
-userSchema.statics.signUp = async function(username, email, password) {
+userSchema.statics.signUp = async function (username, email, password) {
 
     // Validation
     if (!username || !email || !password) throw Error('Please ensure that all fields have been filled out correctly');
@@ -33,17 +33,21 @@ userSchema.statics.signUp = async function(username, email, password) {
     // Check if User already Exists
     const userExists = await this.findOne({ username });
 
+    if (userExists) throw Error('Username already exists. Please try again or login.');
+
     // Encrypt Password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
     // Create and Return User
-    return await this.create({ username, email, password: hash });
-}
+    const user = await this.create({ username, email, password: hash });
+
+    return user;
+};
 
 // User Login Method
-userSchema.statics.login = async function(username, password) {
-    
+userSchema.statics.login = async function (username, password) {
+
     // Check User Exists within Database
     const user = await this.findOne({ username });
 
@@ -56,7 +60,7 @@ userSchema.statics.login = async function(username, password) {
 
     // Return User is checks have passed
     return user;
-}
+};
 
 // Export User Schema as Model
 module.exports = mongoose.model('User', userSchema);
