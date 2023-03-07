@@ -13,9 +13,11 @@ app.use(express.json());
 
 // Route Handlers
 const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Configure Port
 const PORT = process.env.PORT || 3001;
