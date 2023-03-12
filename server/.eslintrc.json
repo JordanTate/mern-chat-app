@@ -11,10 +11,11 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "indent": [ "error", 4 ],
+        "indent": [ "error", "tab" ],
         "padded-blocks": "off",
         "no-underscore-dangle": "off",
         "no-console": "off",
+        "no-tabs": "off",
         "func-names": "off"
     }
 }

@@ -12,23 +12,23 @@ const createToken = (_id) => jwt.sign({ _id }, process.env.JWT_SECRET, { expires
 // Verify Token
 const verifyToken = async (req, res, next) => {
 
-    // Retrieve Token from Request Header
-    const { authorization } = req.headers;
+	// Retrieve Token from Request Header
+	const { authorization } = req.headers;
 
-    // Validation
-    if (!authorization) return res.status(400).json({ error: 'Invalid Authorization.' });
+	// Validation
+	if (!authorization) return res.status(400).json({ error: 'Invalid Authorization.' });
 
-    try {
-        // Retrieve ID from Token
-        const { _id } = jwt.verify(authorization, process.env.JWT_SECRET);
+	try {
+		// Retrieve ID from Token
+		const { _id } = jwt.verify(authorization, process.env.JWT_SECRET);
 
-        // Find User by ID
-        req.user = await User.findOne({ _id }).select('_id');
+		// Find User by ID
+		req.user = await User.findOne({ _id }).select('_id');
 
-        return next();
-    } catch (error) {
-        return res.status(401).json({ error: 'Request Not Authorized.' });
-    }
+		return next();
+	} catch (error) {
+		return res.status(401).json({ error: 'Request Not Authorized.' });
+	}
 };
 
 // Export JWT Functions

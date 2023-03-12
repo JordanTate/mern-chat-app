@@ -9,41 +9,41 @@ const { createToken } = require('../config/jwt.config');
 // User Registration
 const userSignUp = async (req, res) => {
 
-    // Get User Details from Request
-    const { username, email, password } = req.body;
+	// Get User Details from Request
+	const { username, email, password } = req.body;
 
-    try {
-        // Create User
-        const user = await User.signUp(username, email, password);
+	try {
+		// Create User
+		const user = await User.signUp(username, email, password);
 
-        // Create Token
-        const token = createToken(user._id);
+		// Create Token
+		const token = createToken(user._id);
 
-        // Return Token to Client
-        res.status(200).json({ username, token });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
+		// Return Token to Client
+		res.status(200).json({ username, token });
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
 };
 
 // Authenticate User
 const userLogin = async (req, res) => {
 
-    // Get User Details from Request
-    const { username, password } = req.body;
+	// Get User Details from Request
+	const { username, password } = req.body;
 
-    try {
-        // Validate User
-        const user = await User.login(username, password);
+	try {
+		// Validate User
+		const user = await User.login(username, password);
 
-        // Create Token
-        const token = createToken(user._id);
+		// Create Token
+		const token = createToken(user._id);
 
-        // Return Token to Client
-        res.status(200).json({ username, token });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
+		// Return Token to Client
+		res.status(200).json({ username, token });
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
 };
 
 // Export Controller Functions
